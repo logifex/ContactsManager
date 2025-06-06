@@ -6,7 +6,8 @@ const getContacts = () => {
 };
 
 const createContact = (contactInput) => {
-  const contact = contacts.push({ id: nextId++, ...contactInput });
+  const contact = { id: nextId++, ...contactInput };
+  contacts.push(contact);
 
   return contact;
 };

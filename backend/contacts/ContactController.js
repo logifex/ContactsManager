@@ -1,4 +1,4 @@
-const ContactService = require("../services/ContactService");
+const ContactService = require("./ContactService");
 
 const getContacts = (req, res) => {
   const contacts = ContactService.getContacts();
