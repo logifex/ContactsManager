@@ -16,7 +16,7 @@ const ContactRow = ({ contact, onDelete }) => {
   };
 
   return (
-    <tr key={contact.id}>
+    <tr>
       <td>{contact.id}</td>
       <td>{contact.name}</td>
       <td>{contact.email}</td>

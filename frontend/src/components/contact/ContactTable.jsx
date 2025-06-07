@@ -15,7 +15,7 @@ const ContactTable = ({ contacts, onDelete }) => {
       </thead>
       <tbody>
         {contacts.map((contact) => (
-          <ContactRow contact={contact} onDelete={onDelete} />
+          <ContactRow key={contact.id} contact={contact} onDelete={onDelete} />
         ))}
       </tbody>
     </table>
