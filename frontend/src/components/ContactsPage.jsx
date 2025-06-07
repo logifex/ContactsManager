@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from "react";
-import ContactTable from "./ContactTable";
+import ContactTable from "./contact/ContactTable";
 import ContactService from "../services/ContactService";
 import Modal from "./Modal";
-import ContactForm from "./ContactForm";
+import ContactForm from "./contact/ContactForm";
 
 const ContactsPage = () => {
   const [contacts, setContacts] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
 
   const fetchContacts = async () => {
-    const fetchedContacts = await ContactService.getContacts();
-    setContacts(fetchedContacts);
+    try {
+      const fetchedContacts = await ContactService.getContacts();
+      setContacts(fetchedContacts);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -46,16 +54,11 @@ const ContactsPage = () => {
           />
         </Modal>
       )}
-      {contacts.length > 0 ? (
+      {error && <p className="error-message">Error loading table.</p>}
+      {loading && <p>Loading table...</p>}
+      {!error && !loading && contacts.length === 0 && <p>No contacts found.</p>}
+      {contacts.length > 0 && (
         <ContactTable contacts={contacts} onDelete={handleDeleteContact} />
-      ) : (
-        <div>
-          <p>
-            No contacts found.
-            <br />
-            You can add one.
-          </p>
-        </div>
       )}
     </main>
   );

@@ -39,7 +39,8 @@ table {
   border-collapse: collapse;
 }
 
-td, th {
+td,
+th {
   border: 1px solid #dddddd;
   padding: 8px;
 }
@@ -58,8 +59,11 @@ td, th {
 
 .modal {
   padding: 20px;
+  margin: 20px;
   background-color: rgba(60, 60, 60);
   border-radius: 8px;
+  max-width: 350px;
+  width: 100%;
 }
 
 .modal-buttons {
@@ -74,4 +78,26 @@ td, th {
 
 .contact-form .label-input {
   margin-bottom: 10px;
+}
+
+.label-input input {
+  width: 100%;
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 8px;
+  border: 1px solid #dddddd;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+.label-input .error-input {
+  border: 1px solid red;
+}
+
+.error-message {
+  color: red;
+}
+
+.small {
+  font-size: 14px;
 }
