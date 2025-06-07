@@ -1,24 +1,24 @@
 const ContactService = require("./ContactService");
 
-const getContacts = (req, res) => {
-  const contacts = ContactService.getContacts();
+const getContacts = async (req, res) => {
+  const contacts = await ContactService.getContacts();
 
   res.status(200).json(contacts);
 };
 
-const postContact = (req, res) => {
+const postContact = async (req, res) => {
   const contactInput = {
     name: req.body.name,
     email: req.body.email,
     phone: req.body.phone,
   };
 
-  const contact = ContactService.createContact(contactInput);
+  const contact = await ContactService.createContact(contactInput);
 
   res.status(201).json(contact);
 };
 
-const deleteContact = (req, res) => {
+const deleteContact = async (req, res) => {
   const { id: stringId } = req.params;
   const id = parseInt(stringId, 10);
 
@@ -26,7 +26,7 @@ const deleteContact = (req, res) => {
     return res.status(400).json({ message: "Invalid contact ID" });
   }
 
-  const result = ContactService.deleteContact(id);
+  const result = await ContactService.deleteContact(id);
 
   if (!result) {
     return res.status(404).json({ message: "Contact not found" });

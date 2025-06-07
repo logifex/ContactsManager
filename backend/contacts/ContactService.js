@@ -1,25 +1,32 @@
-const contacts = [];
-let nextId = 0;
+const ContactRepository = require("./ContactRepository");
 
-const getContacts = () => {
+const getContacts = async () => {
+  const { contacts } = await ContactRepository.readContactsData();
   return contacts;
 };
 
-const createContact = (contactInput) => {
-  const contact = { id: nextId++, ...contactInput };
-  contacts.push(contact);
+const createContact = async (contactInput) => {
+  const { contacts, nextId } = await ContactRepository.readContactsData();
+  const contact = { id: nextId, ...contactInput };
+  const newContacts = contacts.concat(contact);
+  await ContactRepository.writeContactsData({
+    contacts: newContacts,
+    nextId: nextId + 1,
+  });
 
   return contact;
 };
 
-const deleteContact = (id) => {
-  const removeIndex = contacts.findIndex((c) => c.id === id);
+const deleteContact = async (id) => {
+  const { contacts, nextId } = await ContactRepository.readContactsData();
+  const contactExists = contacts.some((c) => c.id === id);
 
-  if (removeIndex === -1) {
+  if (!contactExists) {
     return false;
   }
 
-  contacts.splice(removeIndex, 1);
+  const newContacts = contacts.filter((c) => c.id !== id);
+  await ContactRepository.writeContactsData({ contacts: newContacts, nextId });
 
   return true;
 };
